@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema black_belt
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `black_belt` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `black_belt` DEFAULT CHARACTER SET utf8mb3 ;
 USE `black_belt` ;
 
 -- -----------------------------------------------------
@@ -19,14 +19,16 @@ USE `black_belt` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `black_belt`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `email` VARCHAR(100) NULL,
-  `password` VARCHAR(255) NULL,
+  `first_name` VARCHAR(45) NULL DEFAULT NULL,
+  `last_name` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(100) NULL DEFAULT NULL,
+  `password` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -34,21 +36,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `black_belt`.`citas` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL,
-  `fecha` DATE NULL,
-  `estado` VARCHAR(45) NULL,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
+  `estado` VARCHAR(45) NULL DEFAULT NULL,
   `create_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `citascol` VARCHAR(45) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_citas_users_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_citas_users`
     FOREIGN KEY (`user_id`)
-    REFERENCES `black_belt`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `black_belt`.`users` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
